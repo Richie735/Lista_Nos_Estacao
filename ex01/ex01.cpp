@@ -4,7 +4,9 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <string.h>
-
+#include <iostream>
+#include <fstream>
+using namespace std;
 
 #define DATA(node) ((node)->data)
 #define NEXT(node) ((node)->next)
@@ -43,8 +45,9 @@ STATUS InsertEnd(LIST* list, void* data);
 
 int ListSize(LIST list);
 void ShowValues(LIST list);
-
 void ShowStatus(LIST list);
+
+STATUS SaveList(LIST list,string fname);
 
 /****************************************************************
 * Programa principal
@@ -53,10 +56,35 @@ void ShowStatus(LIST list);
 int main()
 {
 	LIST list = NULL;
-	ESTACAO line;
+
+	ESTACAO e1, e2;
+	strcpy(e1.desig, "lordelo");
+	e1.custo = 0.1;
+	e1.ativa = TRUE;
+	e1.no = FALSE;
+	strcpy(e2.desig, "vila seca");
+	e2.custo = 0.1;
+	e2.ativa = FALSE;
+	e2.no = TRUE;
+
+	if (InsertIni(&list, &e1) == ERROR)
+	{
+		printf("\nErro na alocacao de memoria\n");
+		printf("\n<Prima qualquer tecla>\n");
+		_getch();
+		exit(1);
+	}
+	if (InsertIni(&list, &e2) == ERROR)
+	{
+		printf("\nErro na alocacao de memoria\n");
+		printf("\n<Prima qualquer tecla>\n");
+		_getch();
+		exit(1);
+	}
 
 	ShowStatus(list);
-	
+	SaveList(list, "LinhaTeste.txt");
+
 	_getch();
 	return 0;
 }
@@ -217,4 +245,33 @@ void ShowStatus(LIST list)
 	ShowValues(list);
 	printf("\n");
 
+}
+
+
+/****************************************************************
+* Funcao: Guarda uma lista num ficheiro
+*
+* Parametros: list - apontador para lista (duplo apontador para o primeiro no')
+*			  fname - nome do ficheiro onde guardar
+* Saida: OK se a lista for guardada com sucesso e ERROR caso o ficheiro nao seja aberto
+***************************************************************/
+STATUS SaveList(LIST list, string fname)
+{
+	ofstream file;
+	file.open(fname);
+
+	if (file.is_open()) {
+		while (list != NULL)
+		{
+			file << ((ESTACAO*)DATA(list))->desig << ';' << ((ESTACAO*)DATA(list))->custo << ';' << ((ESTACAO*)DATA(list))->ativa << ';' << ((ESTACAO*)DATA(list))->no << ';' << endl;
+			list = NEXT(list);
+		}
+	}
+	else {
+		printf("Erro a Abrir %s", fname);
+		return(ERROR);
+	}
+
+	file.close();
+	return(OK);
 }
