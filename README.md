@@ -1,5 +1,5 @@
-#*Programa de gestão de metro*
-  ##Introduçao:
+*Programa de gestão de metro
+  Introduçao:
     O metro e constituido por 5 linhas.
     Cada linha tem varias estaçoes e sao guardadas no respetivo ficheiro.
     As estaçoes sao constituidas por:
@@ -9,7 +9,7 @@
       4. indicaçao se a estaçao é um no de ligaçao com outra linha
   
   
-  ##Funcionalidades:
+  Funcionalidades:
     - [ ] Le os 5 ficheiros e guarda a informaçao na respetiva linha (lista de estaçoes)
     - [ ] Permite ativar/desativar uma estaçao
     - [ ] Permite adicionar uma nova estaçao a uma linha
