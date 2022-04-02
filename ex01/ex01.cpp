@@ -52,6 +52,8 @@ void ShowStatus(LIST list);
 
 void* FindStationName(LIST list, char* str);
 
+int Menu();
+
 STATUS SaveList(LIST list, const char* filename);
 STATUS ReadLine(LIST* list, const char* filename);
 
@@ -60,38 +62,41 @@ STATUS ReadLine(LIST* list, const char* filename);
 ****************************************************************/
 int main()
 {
-	LIST list = NULL;
+	LIST line1 = NULL, line2 = NULL, line3 = NULL, line4 = NULL, line5 = NULL;
+	ESTACAO* ptr = NULL;
+	if (ReadLine(&line1, "Linha1.txt") == OK  &&  ReadLine(&line2, "Linha2.txt") == OK  &&  ReadLine(&line3, "Linha3.txt") == OK  &&  
+		ReadLine(&line4, "Linha4.txt") == OK  &&  ReadLine(&line5, "Linha5.txt") == OK) {
+		do {
+			switch (Menu()) {
+			case 1:
+				break;
 
-	ESTACAO e1, e2;
-	strcpy(e1.desig, "lordelo");
-	e1.custo = 0.1;
-	e1.ativa = TRUE;
-	e1.no = FALSE;
-	strcpy(e2.desig, "vila seca");
-	e2.custo = 0.1;
-	e2.ativa = FALSE;
-	e2.no = TRUE;
+			case 2:
+				break;
 
-	if (InsertIni(&list, &e1) == ERROR)
-	{
-		printf("\nErro na alocacao de memoria\n");
-		printf("\n<Prima qualquer tecla>\n");
-		_getch();
-		exit(1);
+			case 3:
+				break;
+
+			case 4:
+				break;
+
+			case 5:
+				break;
+
+			case 0:
+				return 0;
+				break;
+
+			default:
+				printf("\n   <Opcao Invalida>   \n\n");
+				break;
+			}
+		} while (true);
 	}
-	if (InsertIni(&list, &e2) == ERROR)
-	{
-		printf("\nErro na alocacao de memoria\n");
-		printf("\n<Prima qualquer tecla>\n");
-		_getch();
-		exit(1);
-	}
+	else  printf("     <<ERRO>>\n A ler as linhas\n\n");
 
-	ShowStatus(list);
-	SaveList(list, "LinhaTeste.txt");
 
-	_getch();
-	return 0;
+	return (0);
 }
 
 
@@ -165,6 +170,7 @@ LIST_NODE* NewNode(void* data)
 	return(new_node);
 }
 
+
 /****************************************************************
 *Funcao: Remove um no'
 *
@@ -194,7 +200,6 @@ STATUS RemoveNode(LIST * list, void* data)
 
 	return ERROR;
 }
-
 
 
 /****************************************************************
@@ -316,7 +321,7 @@ void ShowStatus(LIST list)
 * Parametros:	list - apontador para o primeiro no'
 *				str - nome da estacao
 *
-* Saida: void
+* Saida: no desejado
 ***************************************************************/
 void* FindStationName(LIST list, char* str)
 {
@@ -326,6 +331,36 @@ void* FindStationName(LIST list, char* str)
 		
 		list = list->next;
 	}
+	return NULL;
+}
+
+
+/****************************************************************
+* Funcao: Mostra o menu
+*
+* Parametros:	void
+*
+* Saida: Opcao escolhida
+***************************************************************/
+int Menu()
+{
+	int op;
+	do {
+		printf("\n===================================\n");
+		printf("\tMENU\t\n");
+		printf("===================================\n");
+		printf("  1. Ativar/Desativar uma estacao\n");
+		printf("  2. Adicionar uma estacao\n");
+		printf("  3. Eliminar uma estacao\n");
+		printf("  4. Guardar as linhas da rede\n");
+		printf("  5. Calcular custo de viagem\n");
+		printf("  0. Sair\n");
+
+		printf("\n >> ");
+		scanf_s("%d", &op);
+	} while (op < 0 && op >5);
+	
+	return op;
 }
 
 
@@ -379,8 +414,8 @@ STATUS ReadLine(LIST* list, const char* filename)
 		{
 			if ((pt = (ESTACAO*)malloc(sizeof(ESTACAO))) != NULL && (InsertIni(list, pt)) == OK)
 			{
-				fscanf(fp, "%[^;];%f;%d;%d\n", pt->desig, &(pt->custo), &ativa, &no);
-				
+				fscanf(fp, "%[^;];%f;%d;%d\n", &pt->desig, &(pt->custo), &ativa, &no);
+
 				pt->ativa = pt->no = FALSE;
 				
 				if (ativa)	pt->ativa = TRUE;
