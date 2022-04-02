@@ -128,7 +128,7 @@ void initList(LIST* list)
 void FreeList(LIST* list)
 {
 	LIST_NODE* node;
-	
+
 	while (*list != NULL)
 	{
 		node = (*list)->next;
@@ -414,12 +414,16 @@ STATUS ReadLine(LIST* list, const char* filename)
 		{
 			if ((pt = (ESTACAO*)malloc(sizeof(ESTACAO))) != NULL && (InsertIni(list, pt)) == OK)
 			{
-				fscanf(fp, "%[^;];%f;%d;%d\n", &pt->desig, &(pt->custo), &ativa, &no);
+				if (fscanf(fp, "%[^;];%f;%d;%d\n", &pt->desig, &(pt->custo), &ativa, &no) == NULL) {
 
-				pt->ativa = pt->no = FALSE;
-				
-				if (ativa)	pt->ativa = TRUE;
-				if (no)		pt->no = TRUE;
+					pt->ativa = pt->no = FALSE;
+
+					if (ativa)	pt->ativa = TRUE;
+					else pt->ativa = FALSE;
+
+					if (no)		pt->no = TRUE;
+					else pt->no = FALSE;
+				}
 			}
 			else
 			{
