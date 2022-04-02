@@ -14,5 +14,5 @@
     - [ ] Permite ativar/desativar uma estaçao
     - [ ] Permite adicionar uma nova estaçao a uma linha
     - [ ] Permite eliminar uma estaçao
-    - [ ] Guarda as linhas nos respetivos ficheiros
+    - [X] Guarda as linhas nos respetivos ficheiros
     - [ ] Calcula o custo de uma viagem (inserindo a origem e o destino)
