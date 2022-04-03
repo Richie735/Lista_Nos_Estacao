@@ -64,11 +64,12 @@ int main()
 {
 	LIST line1 = NULL, line2 = NULL, line3 = NULL, line4 = NULL, line5 = NULL;
 	ESTACAO* ptr = NULL;
-	if (ReadLine(&line1, "Linha1.txt") == OK  &&  ReadLine(&line2, "Linha2.txt") == OK  &&  ReadLine(&line3, "Linha3.txt") == OK  &&  
-		ReadLine(&line4, "Linha4.txt") == OK  &&  ReadLine(&line5, "Linha5.txt") == OK) {
+	if (ReadLine(&line1, "LinhaTeste.txt") == OK){  //&&  ReadLine(&line2, "Linha2.txt") == OK  &&  ReadLine(&line3, "Linha3.txt") == OK  &&  
+		//ReadLine(&line4, "Linha4.txt") == OK  &&  ReadLine(&line5, "Linha5.txt") == OK) {
 		do {
 			switch (Menu()) {
 			case 1:
+				ShowStatus(line1);
 				break;
 
 			case 2:
@@ -404,26 +405,53 @@ STATUS SaveList(LIST list, const char* filename)
 ***************************************************************/
 STATUS ReadLine(LIST* list, const char* filename)
 {
+	/*
+	ifstream file(filename);
+	//file.open(filename);
+
+	ESTACAO* pt = NULL;
+	int ativa, no;
+
+	if (file.is_open()) {
+		while (!file.eof()) {
+			if ((pt = (ESTACAO*)malloc(sizeof(ESTACAO))) != NULL && (InsertIni(list, pt)) == OK) {
+				cout << &pt->desig << ';' << &(pt->custo) << ';' << &ativa << ';' << &no << ';';
+
+				if (ativa)	pt->ativa = TRUE;
+				else pt->ativa = FALSE;
+
+				if (no)		pt->no = TRUE;
+				else pt->no = FALSE;
+			}
+			else
+			{
+				FreeList(list);
+				return ERROR;
+			}
+		}
+	}
+	
+	file.close();
+	return(OK);
+	*/
+
 	ESTACAO* pt = NULL;
 	FILE* fp = NULL;
 	int ativa, no;
-
+	
 	if ((fp = fopen(filename, "r")) != NULL)
 	{
 		while (!feof(fp))
 		{
 			if ((pt = (ESTACAO*)malloc(sizeof(ESTACAO))) != NULL && (InsertIni(list, pt)) == OK)
 			{
-				if (fscanf(fp, "%[^;];%f;%d;%d\n", &pt->desig, &(pt->custo), &ativa, &no) == NULL) {
+				fscanf(fp, "%[^;];%f;%d;%d\n", &pt->desig, &(pt->custo), &ativa, &no);
 
-					pt->ativa = pt->no = FALSE;
+				if (ativa)	pt->ativa = TRUE;
+				else pt->ativa = FALSE;
 
-					if (ativa)	pt->ativa = TRUE;
-					else pt->ativa = FALSE;
-
-					if (no)		pt->no = TRUE;
-					else pt->no = FALSE;
-				}
+				if (no)		pt->no = TRUE;
+				else pt->no = FALSE;
 			}
 			else
 			{
