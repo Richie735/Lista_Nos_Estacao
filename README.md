@@ -10,9 +10,9 @@
       4. indicaçao se a estaçao é um no de ligaçao com outra linha
       
 ##  Funcionalidades
-    - [ ] Le os 5 ficheiros e guarda a informaçao na respetiva linha (lista de estaçoes)
-    - [ ] Permite ativar/desativar uma estaçao
-    - [ ] Permite adicionar uma nova estaçao a uma linha
-    - [ ] Permite eliminar uma estaçao
+    - [X] Le os 5 ficheiros e guarda a informaçao na respetiva linha (lista de estaçoes)
+    - [X] Permite ativar/desativar uma estaçao
+    - [X] Permite adicionar uma nova estaçao a uma linha
+    - [X] Permite eliminar uma estaçao
     - [X] Guarda as linhas nos respetivos ficheiros
     - [ ] Calcula o custo de uma viagem (inserindo a origem e o destino)

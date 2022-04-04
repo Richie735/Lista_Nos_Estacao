@@ -63,7 +63,7 @@ int main()
 	LIST linha1 = NULL, linha2 = NULL, linha3 = NULL, linha4 = NULL, linha5 = NULL, linha = NULL;
 	ESTACAO* ptr = NULL;
 
-	char str[20];
+	char str[MAX];
 	void* pt = NULL;
 
 	if ((ReadLine(&linha1, "Linha1.txt") == OK)
@@ -106,21 +106,39 @@ int main()
 
 			case 2: // Adicionar uma estacao
 			{
+				printf("\n\n-----------------------------------\n");
+				printf("\tAdicionar Estacao\t\n");
+				printf("-----------------------------------\n");
+
 				linha = ChooseList(linha1, linha2, linha3, linha4, linha5);
 				AddEstacao(&linha);
-				ShowValues(linha);
+				ShowStatus(linha);
 				break;
 			}
 
 			case 3: // Eliminar uma estacao
 			{
+				printf("\n\n-----------------------------------\n");
+				printf("\tRemover Estacao\t\n");
+				printf("-----------------------------------\n");
+
 				linha = ChooseList(linha1, linha2, linha3, linha4, linha5);
 				RemoveEstacao(&linha);
+				ShowStatus(linha);
 				break;
 			}
 
 			case 4: // Guardar as linhas da rede
 			{
+				printf("\n\n-----------------------------------\n");
+				printf("\tGuardar Linhas\t\n");
+				printf("-----------------------------------\n");
+				
+				//SaveLine(linha1, "Linha1.txt");
+				//SaveLine(linha2, "Linha1.txt");
+				//SaveLine(linha3, "Linha1.txt");
+				//SaveLine(linha4, "Linha1.txt");
+				//SaveLine(linha5, "Linha1.txt");
 				break;
 			}
 
@@ -355,6 +373,7 @@ LIST ChooseList(LIST line1, LIST line2, LIST line3, LIST line4, LIST line5)
 		
 		default:
 			printf("Linha nao existe \n");
+			return NULL;
 			break;
 	}
 }
@@ -414,18 +433,18 @@ void AddEstacao(LIST* list)
 
 	if (((ptr = (ESTACAO*)malloc(sizeof(ESTACAO))) != NULL) && (InsertEnd(list, ptr) == OK))
 	{
-		printf(" Designação: ");
+		printf("  >Designacao: ");
 		scanf("%s", &ptr->desig);
 
-		printf(" Custo: ");
+		printf("  >Custo: ");
 		scanf("%f", &ptr->custo);
 		
-		printf(" Ativo (0/1): ");
+		printf("  >Ativo (0/1): ");
 		scanf("%d", &ativa);
 		if (ativa) ptr->ativa = TRUE;
 		else ptr->ativa = FALSE;
 
-		printf(" No (0/1): ");
+		printf("  >No (0/1): ");
 		scanf("%d", &no);
 		if (no) ptr->no = TRUE;
 		else ptr->no = FALSE;
@@ -445,13 +464,12 @@ void RemoveEstacao(LIST* list)
 	char str[30];
 	ESTACAO* ptr;
 
-	printf("\n\n\n");
-	printf("Designação da estação: ");
+	printf("  >Designacao da estacao: ");
 	while ((getchar()) != '\n');
 	gets_s(str);
 
 	if ((ptr = FindStationName(*list, str)) != NULL) RemoveNode(list, ptr);
-	else printf("Estação inexistente\n");
+	else printf(" -Estacao inexistente\n");
 
 }
 
@@ -534,7 +552,7 @@ STATUS SaveLine(LIST list, const char* filename)
 			list = NEXT(list);
 		}
 		fclose(fp);
-		printf("Linha salva com sucesso\n");
+		printf(">Linha salva com sucesso\n");
 		return OK;
 	}
 	else {
