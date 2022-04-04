@@ -15,4 +15,4 @@
     - [X] Permite adicionar uma nova estaçao a uma linha
     - [X] Permite eliminar uma estaçao
     - [X] Guarda as linhas nos respetivos ficheiros
-    - [ ] Calcula o custo de uma viagem (inserindo a origem e o destino)
+    - [X] Calcula o custo de uma viagem (inserindo a origem e o destino)

@@ -51,7 +51,7 @@ void ShowStatus(LIST list);
 void AddEstacao(LIST* list);
 void RemoveEstacao(LIST* list);
 ESTACAO* FindStationName(LIST list, char* str);
-
+float Custo(LIST list, char* orig, char* dest);
 int Menu();
 
 STATUS ReadLine(LIST* list, const char* filename);
@@ -61,9 +61,8 @@ STATUS SaveLine(LIST list, const char* filename);
 int main()
 {
 	LIST linha1 = NULL, linha2 = NULL, linha3 = NULL, linha4 = NULL, linha5 = NULL, linha = NULL;
-	ESTACAO* ptr = NULL;
-
-	char str[MAX];
+	ESTACAO* ptr = NULL, * orig = NULL, *dest = NULL;
+	char str[MAX], origin[MAX], destiny[MAX];
 	void* pt = NULL;
 
 	if ((ReadLine(&linha1, "Linha1.txt") == OK)
@@ -128,22 +127,39 @@ int main()
 				break;
 			}
 
-			case 4: // Guardar as linhas da rede
+			case 4: // Guardar as linhas da rede		saveline n esta a guardar todas as linhas 
 			{
 				printf("\n\n-----------------------------------\n");
 				printf("\tGuardar Linhas\t\n");
 				printf("-----------------------------------\n");
 				
-				//SaveLine(linha1, "Linha1.txt");
-				//SaveLine(linha2, "Linha1.txt");
-				//SaveLine(linha3, "Linha1.txt");
-				//SaveLine(linha4, "Linha1.txt");
-				//SaveLine(linha5, "Linha1.txt");
+				if ((SaveLine(linha1, "Linha1_.txt") == OK)
+					&& (SaveLine(linha2, "Linha2_.txt") == OK)
+					&& (SaveLine(linha3, "Linha3_.txt") == OK)
+					&& (SaveLine(linha4, "Linha4_.txt") == OK)
+					&& (SaveLine(linha5, "Linha5_.txt") == OK))
+				{
+					printf("\n>Linhas guardadas com sucesso\n\n");
+				}
+
 				break;
 			}
 
 			case 5: // Calcular custo de viagem
 			{
+				printf("\n\n-----------------------------------\n");
+				printf("\tCalcular Custo de Viagem\t\n");
+				printf("-----------------------------------\n");
+
+				linha = ChooseList(linha1, linha2, linha3, linha4, linha5);
+
+				printf(" >Estacao de origem :  ");
+				scanf("%s", origin);
+				printf(" >Estacao de destino :  ");
+				scanf("%s", destiny);
+
+				printf("\n >>%s -> %s", origin, destiny);
+				printf("\n  -Custo : %.2f\n\n", Custo(linha, origin, destiny));
 				break;
 			}
 
@@ -372,7 +388,7 @@ LIST ChooseList(LIST line1, LIST line2, LIST line3, LIST line4, LIST line5)
 			break;
 		
 		default:
-			printf("Linha nao existe \n");
+			printf(" -Linha nao existe \n");
 			return NULL;
 			break;
 	}
@@ -499,6 +515,40 @@ ESTACAO* FindStationName(LIST list, char* str)
 
 
 /****************************************************************
+* Funcao: Calcular o custo do percurso
+*
+* Parametros:	list - apontador para o primeiro no'
+*				orig - nome da estacao de origem
+*				dest - nome da estacao de destino
+*
+* Saida: no desejado
+***************************************************************/
+float Custo(LIST list, char* orig, char* dest)
+{
+	float c = 0;
+	int flag = 0;
+
+	
+	while (list != NULL) {
+		if (flag) {
+			if (!strcmp(((ESTACAO*)DATA(list))->desig, dest)) {
+				return c;
+			}
+			else c += ((ESTACAO*)DATA(list))->custo;
+		}
+
+		if(!strcmp(((ESTACAO*)DATA(list))->desig, orig)) {
+			flag = 1;
+			c += ((ESTACAO*)DATA(list))->custo;
+		}
+
+		list = NEXT(list);
+	}
+	return -1;
+}
+
+
+/****************************************************************
 * Funcao: Mostra o menu
 *
 * Parametros:	void
@@ -548,7 +598,7 @@ STATUS SaveLine(LIST list, const char* filename)
 			pt = (ESTACAO*)DATA(list);
 			if (pt->ativa) ativa = 1;
 			if (pt->no) no = 1;
-			fprintf(fp, "%c;%.1f;%d;%d;\n", pt->desig, pt->custo, ativa, no);
+			fprintf(fp, "%s;%.1f;%d;%d;\n", pt->desig, pt->custo, ativa, no);
 			list = NEXT(list);
 		}
 		fclose(fp);
