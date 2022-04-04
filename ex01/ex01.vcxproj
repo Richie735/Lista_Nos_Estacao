@@ -142,11 +142,11 @@
     <ClCompile Include="ex01.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\linhas\Linha1.txt" />
-    <Text Include="..\linhas\Linha2.txt" />
-    <Text Include="..\linhas\Linha3.txt" />
-    <Text Include="..\linhas\Linha4.txt" />
-    <Text Include="..\linhas\Linha5.txt" />
+    <Text Include="Linha1.txt" />
+    <Text Include="Linha2.txt" />
+    <Text Include="Linha3.txt" />
+    <Text Include="Linha4.txt" />
+    <Text Include="Linha5.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

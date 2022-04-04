@@ -20,12 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\linhas\Linha2.txt" />
-    <Text Include="..\linhas\Linha3.txt" />
-    <Text Include="..\linhas\Linha4.txt" />
-    <Text Include="..\linhas\Linha5.txt" />
-    <Text Include="..\linhas\Linha1.txt">
-      <Filter>Arquivos de Origem</Filter>
-    </Text>
+    <Text Include="Linha1.txt" />
+    <Text Include="Linha2.txt" />
+    <Text Include="Linha3.txt" />
+    <Text Include="Linha4.txt" />
+    <Text Include="Linha5.txt" />
   </ItemGroup>
 </Project>
