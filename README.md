@@ -1,6 +1,7 @@
 # Programa de gestão de metro
 
 ##  Introduçao
+    Trabalho realizado para a cadeira de algoritmia 
     O metro e constituido por 5 linhas.
     Cada linha tem varias estaçoes e sao guardadas no respetivo ficheiro.
     As estaçoes sao constituidas por:
