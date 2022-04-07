@@ -269,7 +269,7 @@ STATUS RemoveNode(LIST* list, void* data)
 	while (temp != NULL)
 	{
 		if (temp->data == data) {
-			if (temp = *list)   *list = (*list)->next;
+			if (temp == *list)   *list = (*list)->next;
 			else                ant->next = temp->next;
 
 			free(temp->data);
